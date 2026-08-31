@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-774td*6c%^5j*+=*7m&09ho^^vpp%*l9rpkna-d#q-02tznfm7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "talentlens-backend-gsai.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
