@@ -5,7 +5,7 @@ from .models import Vacancy
 from rest_framework import generics
 from .serializers import VacancySerializer
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, BasePermission,IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, BasePermission, IsAuthenticated
 from rest_framework import status
 from django.core.mail import send_mass_mail
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -22,12 +22,23 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from .models import Vacancy, AcceptedResume
-class IsAdminOrReadOnly(BasePermission):
 
+
+class IsStaffOrSuperuser(BasePermission):
+    def has_permission(self, request, view):
+        return (
+            request.user.is_authenticated
+            and (request.user.is_staff or request.user.is_superuser)
+        )
+
+
+class IsAdminOrReadOnly(IsStaffOrSuperuser):
     def has_permission(self, request, view):
         if request.method in ["GET", "HEAD", "OPTIONS"]:
             return True
-        return request.user.is_authenticated and request.user.is_staff
+        return super().has_permission(request, view)
+
+
 class VacancyListCreateView(generics.ListCreateAPIView):
     serializer_class = VacancySerializer
     pagination_class = VacancyPagination
@@ -131,7 +142,7 @@ class EvaluateResumeView(generics.GenericAPIView):
         )
 class SendEmailToAcceptedCandidatesView(generics.GenericAPIView):
 
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsStaffOrSuperuser]
 
     def post(self, request, *args, **kwargs):
 

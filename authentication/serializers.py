@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password1'],
             is_superuser=is_superuser,
+            is_staff=is_superuser,
         )
         return user
 
