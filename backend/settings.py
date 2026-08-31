@@ -165,11 +165,13 @@ MAILERS = {
             "username": EMAIL_SENDER,
             "password": EMAIL_PASSWORD,
             "use_tls": True,
+            "use_ssl": False,
         },
     }
 }
 
 DEFAULT_FROM_EMAIL = EMAIL_SENDER
+SERVER_EMAIL = EMAIL_SENDER
 
 
 
