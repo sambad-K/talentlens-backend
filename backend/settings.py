@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'corsheaders',
     'django.contrib.staticfiles',
     'rest_framework',
     'authentication',
@@ -185,3 +186,6 @@ DATABASES = {
         ssl_require=True,
     )
 }
+CSRF_TRUSTED_ORIGINS = [
+    "https://talentlens-frontend.pages.dev",
+]
